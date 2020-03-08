@@ -18,6 +18,9 @@ class _RegisterState extends State<Register> {
   String _email = '';
   String _password = '';
   String _errorMsg = '';
+  String _name = '';
+  String _age = '';
+  String _weight = '';
   @override
   Widget build(BuildContext context) {
     return _loading
@@ -31,6 +34,41 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 100.0),
+                    TextFormField(
+                      decoration:
+                          textInputDecorection.copyWith(hintText: 'Name'),
+                      validator: (val) =>
+                          val.isEmpty ? 'Enter your name' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          _name = val;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 20.0),
+                    TextFormField(
+                      decoration:
+                          textInputDecorection.copyWith(hintText: 'Age'),
+                      validator: (val) => val.isEmpty ? 'Enter your age' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          _age = val;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 20.0),
+                    TextFormField(
+                      decoration:
+                          textInputDecorection.copyWith(hintText: 'weight'),
+                      validator: (val) =>
+                          val.isEmpty ? 'Enter your weight' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          _weight = val;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 20.0),
                     TextFormField(
                       decoration:
                           textInputDecorection.copyWith(hintText: 'Email'),
@@ -71,8 +109,9 @@ class _RegisterState extends State<Register> {
                           });
                           print(_email);
                           print(_password);
-                          dynamic result = await _auth
-                              .registerWithEmailAndPassword(_email, _password);
+                          dynamic result =
+                              await _auth.registerWithEmailAndPassword(
+                                  _email, _password, _name, _age, _weight);
                           if (result == null) {
                             setState(() {
                               _loading = false;
