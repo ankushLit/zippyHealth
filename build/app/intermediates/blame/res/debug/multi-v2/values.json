@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/ankush/Desktop/zippyHealth/zippy_health/zippyhealth/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/ankush/Desktop/zippyHealth/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
                     "source": "/Users/ankush/.gradle/caches/transforms-2/files-2.1/d255798b3263f4a3c8e304b7de4de531/coordinatorlayout-1.0.0/res/values/values.xml",
@@ -42,7 +42,7 @@
                     }
                 },
                 {
-                    "source": "/Users/ankush/Desktop/zippyHealth/zippy_health/zippyhealth/build/app/generated/res/google-services/debug/values/values.xml",
+                    "source": "/Users/ankush/Desktop/zippyHealth/build/app/generated/res/google-services/debug/values/values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -56,6 +56,25 @@
                         "startOffsets": "5528,5670,5782,5862,5966,6073,6193,6294",
                         "endColumns": "141,111,79,103,106,119,100,77",
                         "endOffsets": "5665,5777,5857,5961,6068,6188,6289,6367"
+                    }
+                },
+                {
+                    "source": "/Users/ankush/Desktop/zippyHealth/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "347"
+                    },
+                    "to": {
+                        "startLines": "76",
+                        "startColumns": "4",
+                        "startOffsets": "6443",
+                        "endLines": "80",
+                        "endColumns": "12",
+                        "endOffsets": "6735"
                     }
                 },
                 {
@@ -73,25 +92,6 @@
                         "startOffsets": "3057,4235",
                         "endColumns": "67,166",
                         "endOffsets": "3120,4397"
-                    }
-                },
-                {
-                    "source": "/Users/ankush/Desktop/zippyHealth/zippy_health/zippyhealth/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "347"
-                    },
-                    "to": {
-                        "startLines": "76",
-                        "startColumns": "4",
-                        "startOffsets": "6443",
-                        "endLines": "80",
-                        "endColumns": "12",
-                        "endOffsets": "6735"
                     }
                 },
                 {

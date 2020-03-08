@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/ankush/Desktop/zippyHealth/zippy_health/zippyhealth/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-ky/values-ky.xml",
+            "outputFile": "/Users/ankush/Desktop/zippyHealth/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-ky/values-ky.xml",
             "map": [
                 {
                     "source": "/Users/ankush/.gradle/caches/transforms-2/files-2.1/65ebbbe0f13209f0d6a9d40d6c0b0084/jetified-play-services-basement-17.0.0/res/values-ky/values.xml",
