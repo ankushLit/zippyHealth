@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:zippyhealth/models/prescription_model.dart';
+import 'package:zippyhealth/screens/home/prescriptionTile.dart';
+import 'package:zippyhealth/shared/loading.dart';
 
 class PrescriptionList extends StatefulWidget {
   @override
@@ -10,8 +12,19 @@ class PrescriptionList extends StatefulWidget {
 class _PrescriptionListState extends State<PrescriptionList> {
   @override
   Widget build(BuildContext context) {
-    final prescriptions = Provider.of<QuerySnapshot>(context);
-    print(prescriptions);
-    return Container();
+    final prescriptions = Provider.of<List<Prescriptions>>(context);
+    //print(prescriptions.documents);
+    // prescriptions.forEach((pres) {
+    //   print(pres.name);
+    //   print(pres.docName);
+    //   print(pres.tablets);
+    // });
+    return prescriptions == null
+        ? Loading()
+        : ListView.builder(
+            itemCount: prescriptions.length ?? 0,
+            itemBuilder: (context, index) {
+              return PrescriptionListTile(pres: prescriptions[index]);
+            });
   }
 }

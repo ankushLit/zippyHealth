@@ -4,7 +4,7 @@ import 'package:zippyhealth/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  String uid = '';
   // create user object based on FirebaseUser
 
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -45,6 +45,14 @@ class AuthService {
       print(e.toString());
       return null;
     }
+  }
+
+//get uid
+  Future<String> getUid() async {
+    final FirebaseUser user = await _auth.currentUser();
+    uid = user.uid.toString();
+    //print(uid);
+    return uid;
   }
 
   //sign out

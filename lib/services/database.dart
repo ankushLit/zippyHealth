@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zippyhealth/models/prescription_model.dart';
 
 class DatabaseService {
   final String uid;
@@ -16,9 +17,26 @@ class DatabaseService {
     });
   }
 
-  // get prescription stream
+// get prescription list from snapshot
+  List<Prescriptions> _prescriptionListFromSnapshot(
+      QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((doc) {
+      return Prescriptions(
+          name: doc.data['name'] ?? '',
+          docName: doc.data['doctor_name'] ?? '',
+          tablets: doc.data['tablets'].toString().split(',') ?? [],
+          date: doc.data['date'] ?? '');
+    }).toList();
+  }
 
-  Stream<QuerySnapshot> get prescriptions {
-    return patients.snapshots();
+  // get prescription stream
+  Stream<List<Prescriptions>> get prescriptions {
+    print('uid' + uid);
+    return Firestore.instance
+        .collection('patients')
+        .document(uid)
+        .collection('prescription')
+        .snapshots()
+        .map(_prescriptionListFromSnapshot);
   }
 }
