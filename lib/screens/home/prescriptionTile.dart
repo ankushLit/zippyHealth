@@ -9,12 +9,15 @@ class PrescriptionListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
-      child: Card(
-        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-        child: ListTile(
-          leading: Container(child: Text('1')),
-          title: Text(pres.docName),
-          subtitle: Text(pres.date),
+      child: GestureDetector(
+        onTap: () => {print("Tapped")},
+        child: Card(
+          margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+          child: ListTile(
+            leading: Container(child: Text('1')),
+            title: Text(pres.docName),
+            subtitle: Text(pres.date),
+          ),
         ),
       ),
     );
