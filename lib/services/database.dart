@@ -25,6 +25,7 @@ class DatabaseService {
           name: doc.data['name'] ?? '',
           docName: doc.data['doctor_name'] ?? '',
           tablets: doc.data['tablets'].toString().split(',') ?? [],
+          presId: doc.data['presId'] ?? '',
           date: doc.data['date'] ?? '');
     }).toList();
   }

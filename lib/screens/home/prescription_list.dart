@@ -24,7 +24,10 @@ class _PrescriptionListState extends State<PrescriptionList> {
         : ListView.builder(
             itemCount: prescriptions.length ?? 0,
             itemBuilder: (context, index) {
-              return PrescriptionListTile(pres: prescriptions[index]);
+              return PrescriptionListTile(
+                pres: prescriptions[index],
+                presNum: index,
+              );
             });
   }
 }

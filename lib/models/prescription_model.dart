@@ -7,5 +7,8 @@ class Prescriptions {
 
   final String date;
 
-  Prescriptions({this.name, this.docName, this.tablets, this.date});
+  final String presId;
+
+  Prescriptions(
+      {this.name, this.docName, this.tablets, this.date, this.presId});
 }
