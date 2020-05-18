@@ -13,6 +13,13 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          // Define the default brightness and colors.
+          brightness: Brightness.light,
+          primaryColor: Colors.teal[700],
+          accentColor: Colors.teal,
+        ),
         home: Wrapper(),
       ),
     );

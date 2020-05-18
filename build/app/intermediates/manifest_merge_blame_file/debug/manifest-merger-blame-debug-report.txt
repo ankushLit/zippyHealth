@@ -38,7 +38,7 @@
 27        android:name="io.flutter.app.FlutterApplication"
 27-->/Users/ankush/Desktop/zippyHealth/android/app/src/main/AndroidManifest.xml:9:9-57
 28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-28-->[androidx.core:core:1.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/c1da7862c7abb8e426855a3f78caf221/core-1.0.0/AndroidManifest.xml:22:18-86
+28-->[androidx.core:core:1.1.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/3aaf6e5219b7f981ec263df919098c6f/core-1.1.0/AndroidManifest.xml:24:18-86
 29        android:debuggable="true"
 30        android:icon="@mipmap/ic_launcher"
 30-->/Users/ankush/Desktop/zippyHealth/android/app/src/main/AndroidManifest.xml:11:9-43
@@ -85,7 +85,7 @@
 54            android:name="com.google.firebase.components.ComponentDiscoveryService"
 54-->[:firebase_auth] /Users/ankush/Desktop/zippyHealth/build/firebase_auth/intermediates/library_manifest/debug/AndroidManifest.xml:8:18-89
 55            android:directBootAware="true"
-55-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6d92cd2d7ffccf7b68d2ec3180fbb41d/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
+55-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/eb82dc1a8331511ad785eccef2a2df34/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
 56            android:exported="false" >
 56-->[com.google.firebase:firebase-auth:19.2.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/a83bb62cb43b672cf00b874e0ee6110c/firebase-auth-19.2.0/AndroidManifest.xml:35:13-37
 57            <meta-data
@@ -119,11 +119,11 @@
 71                android:value="com.google.firebase.components.ComponentRegistrar" />
 71-->[com.google.android.gms:play-services-measurement-api:17.2.2] /Users/ankush/.gradle/caches/transforms-2/files-2.1/ca912bff2260618b5b638fe661521702/play-services-measurement-api-17.2.2/AndroidManifest.xml:32:17-82
 72            <meta-data
-72-->[com.google.firebase:firebase-firestore:21.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/cb2e2399224d96ce3bd18e4a377d2272/jetified-firebase-firestore-21.3.0/AndroidManifest.xml:20:13-22:85
+72-->[com.google.firebase:firebase-firestore:21.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/a9f47501b4ba688bd1109335e99dbcc9/jetified-firebase-firestore-21.3.0/AndroidManifest.xml:20:13-22:85
 73                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-73-->[com.google.firebase:firebase-firestore:21.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/cb2e2399224d96ce3bd18e4a377d2272/jetified-firebase-firestore-21.3.0/AndroidManifest.xml:21:17-111
+73-->[com.google.firebase:firebase-firestore:21.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/a9f47501b4ba688bd1109335e99dbcc9/jetified-firebase-firestore-21.3.0/AndroidManifest.xml:21:17-111
 74                android:value="com.google.firebase.components.ComponentRegistrar" />
-74-->[com.google.firebase:firebase-firestore:21.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/cb2e2399224d96ce3bd18e4a377d2272/jetified-firebase-firestore-21.3.0/AndroidManifest.xml:22:17-82
+74-->[com.google.firebase:firebase-firestore:21.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/a9f47501b4ba688bd1109335e99dbcc9/jetified-firebase-firestore-21.3.0/AndroidManifest.xml:22:17-82
 75            <meta-data
 75-->[com.google.firebase:firebase-iid:20.0.2] /Users/ankush/.gradle/caches/transforms-2/files-2.1/f26cdfb5f8d69cbc9663543f3ec1de65/firebase-iid-20.0.2/AndroidManifest.xml:32:13-34:85
 76                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
@@ -210,15 +210,15 @@
 120        </receiver>
 121
 122        <provider
-122-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6d92cd2d7ffccf7b68d2ec3180fbb41d/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
+122-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/eb82dc1a8331511ad785eccef2a2df34/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
 123            android:name="com.google.firebase.provider.FirebaseInitProvider"
-123-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6d92cd2d7ffccf7b68d2ec3180fbb41d/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
+123-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/eb82dc1a8331511ad785eccef2a2df34/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
 124            android:authorities="com.zippyhealth.zippyhealth.firebaseinitprovider"
-124-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6d92cd2d7ffccf7b68d2ec3180fbb41d/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
+124-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/eb82dc1a8331511ad785eccef2a2df34/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
 125            android:exported="false"
-125-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6d92cd2d7ffccf7b68d2ec3180fbb41d/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
+125-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/eb82dc1a8331511ad785eccef2a2df34/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
 126            android:initOrder="100" />
-126-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6d92cd2d7ffccf7b68d2ec3180fbb41d/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
+126-->[com.google.firebase:firebase-common:19.3.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/eb82dc1a8331511ad785eccef2a2df34/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
 127
 128        <activity
 128-->[com.google.android.gms:play-services-base:17.1.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6eb14f512292913515d869914807ad40/play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
@@ -230,11 +230,11 @@
 131-->[com.google.android.gms:play-services-base:17.1.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/6eb14f512292913515d869914807ad40/play-services-base-17.1.0/AndroidManifest.xml:26:13-72
 132
 133        <meta-data
-133-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/65ebbbe0f13209f0d6a9d40d6c0b0084/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+133-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/be271aaa223dab8c8422e3da7d045fc5/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
 134            android:name="com.google.android.gms.version"
-134-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/65ebbbe0f13209f0d6a9d40d6c0b0084/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+134-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/be271aaa223dab8c8422e3da7d045fc5/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
 135            android:value="@integer/google_play_services_version" />
-135-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/65ebbbe0f13209f0d6a9d40d6c0b0084/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+135-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ankush/.gradle/caches/transforms-2/files-2.1/be271aaa223dab8c8422e3da7d045fc5/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
 136    </application>
 137
 138</manifest>
