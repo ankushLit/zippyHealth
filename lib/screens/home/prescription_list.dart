@@ -26,7 +26,7 @@ class _PrescriptionListState extends State<PrescriptionList> {
             itemBuilder: (context, index) {
               return PrescriptionListTile(
                 pres: prescriptions[index],
-                presNum: index,
+                presNum: ++index,
               );
             });
   }

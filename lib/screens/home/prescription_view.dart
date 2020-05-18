@@ -73,9 +73,9 @@ class PrescriptionView extends StatelessWidget {
 
     Widget line() {
       return Container(
-        color: Colors.blue,
-        height: 5.0,
-        width: 50.0,
+        color: const Color(0xff17A589),
+        height: 3.0,
+        width: 70.0,
       );
     }
 
@@ -83,55 +83,83 @@ class PrescriptionView extends StatelessWidget {
     int prescriptionIndex = -4;
     int tabletTimingIndex = 0;
     final bottomContent = Expanded(
-      // color: Theme.of(context).primaryColor,
-      // padding: EdgeInsets.all(40.0),
-
       child: ListView.builder(
           itemCount: ((prescription.tablets.length) ~/ 4).toInt(),
           itemBuilder: (context, index) {
             return Card(
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
-                  leading: Container(
-                      child: Text((++prescriptionCounter).toString())),
-                  title: Text(prescription.tablets[prescriptionIndex += 4]),
-                  subtitle: Row(
+                  leading: Column(
                     children: <Widget>[
-                      prescription.tablets[tabletTimingIndex =
-                                  prescriptionIndex + 1] ==
-                              '0'
-                          ? Icon(
-                              Icons.check_circle,
-                              color: Colors.blue,
-                            )
-                          : Icon(
-                              Icons.radio_button_unchecked,
-                              color: Colors.blue,
-                            ),
-                      spacer(),
-                      line(),
-                      prescription.tablets[++tabletTimingIndex] == '0'
-                          ? Icon(
-                              Icons.check_circle,
-                              color: Colors.blue,
-                            )
-                          : Icon(
-                              Icons.radio_button_unchecked,
-                              color: Colors.blue,
-                            ),
-                      spacer(),
-                      line(),
-                      prescription.tablets[++tabletTimingIndex] == '0'
-                          ? Icon(
-                              Icons.check_circle,
-                              color: Colors.blue,
-                            )
-                          : Icon(
-                              Icons.radio_button_unchecked,
-                              color: Colors.blue,
-                            ),
+                      Container(
+                        child: Text(
+                          (++prescriptionCounter).toString(),
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ),
                     ],
                   ),
+                  title: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Text(
+                        prescription.tablets[prescriptionIndex += 4],
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    ],
+                  ),
+                  subtitle: Column(children: <Widget>[
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        prescription.tablets[tabletTimingIndex =
+                                    prescriptionIndex + 1] ==
+                                '1'
+                            ? Icon(
+                                Icons.check_circle,
+                                color: const Color(0xff17A589),
+                              )
+                            : Icon(
+                                Icons.radio_button_unchecked,
+                                color: const Color(0xff17A589),
+                              ),
+                        spacer(),
+                        line(),
+                        spacer(),
+                        prescription.tablets[++tabletTimingIndex] == '1'
+                            ? Icon(
+                                Icons.check_circle,
+                                color: const Color(0xff17A589),
+                              )
+                            : Icon(
+                                Icons.radio_button_unchecked,
+                                color: const Color(0xff17A589),
+                              ),
+                        spacer(),
+                        line(),
+                        spacer(),
+                        prescription.tablets[++tabletTimingIndex] == '1'
+                            ? Icon(
+                                Icons.check_circle,
+                                color: const Color(0xff17A589),
+                              )
+                            : Icon(
+                                Icons.radio_button_unchecked,
+                                color: const Color(0xff17A589),
+                              ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                  ]),
                 ));
           }),
     );
