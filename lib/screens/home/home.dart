@@ -5,7 +5,7 @@ import 'package:zippyhealth/services/auth.dart';
 import 'package:zippyhealth/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:zippyhealth/shared/loading.dart';
-import 'package:zippyhealth/screens/scanDocs/pg1.dart';
+import 'package:zippyhealth/screens/scanDocs/image_handler.dart';
 import 'package:zippyhealth/screens/viewDocs/pg2.dart';
 
 class Home extends StatefulWidget {
@@ -20,7 +20,7 @@ class HomeState extends State<Home> {
       case 0:
         return PrescriptionList();
       case 1:
-        return Page1();
+        return ImageCapture();
       case 2:
         return Page2();
 
