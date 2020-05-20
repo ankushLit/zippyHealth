@@ -18,42 +18,72 @@ class _UploaderState extends State<Uploader> {
 
   StorageUploadTask _uploadTask;
 
-  void _startUpload() async {
+  void _startUpload(String folder) async {
     String x = await _authService.getUid();
-    String filepath = x + '/${DateTime.now()}.png';
+    String filepath = x + '/' + folder + '/${DateTime.now()}.png';
     setState(() {
       _uploadTask = _storage.ref().child(filepath).putFile(widget.file);
     });
   }
 
   void _selectFolderPrompt() {
-    bool reportsSelected = false;
-    bool prescriptionsSelected = false;
     showDialog(
         context: context,
-        builder: (_) => AlertDialog(
-              title: Text('Select Type'),
-              content: Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.list),
-                    color: prescriptionsSelected ? Colors.teal : Colors.grey,
+        builder: (context) {
+          bool reportsSelected = false;
+          bool prescriptionsSelected = false;
+          List<String> folderType = ['Prescriptions', 'Reports'];
+          String selectedFolderType = 'Prescriptions';
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: Text('Select Type'),
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton.icon(
+                      label: Text('Prescriptions'),
+                      icon: Icon(Icons.list),
+                      color: prescriptionsSelected ? Colors.teal : Colors.grey,
+                      onPressed: () {
+                        setState(() {
+                          selectedFolderType = folderType[0];
+                          prescriptionsSelected = true;
+                          reportsSelected = false;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    FlatButton.icon(
+                      label: Text('Reports'),
+                      icon: Icon(Icons.pages),
+                      color: reportsSelected ? Colors.teal : Colors.grey,
+                      onPressed: () {
+                        setState(() {
+                          selectedFolderType = folderType[1];
+                          prescriptionsSelected = false;
+                          reportsSelected = true;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text('Upload'),
                     onPressed: () {
-                      prescriptionsSelected = true;
-                      reportsSelected = false;
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.pages),
-                    color: reportsSelected ? Colors.teal : Colors.grey,
-                    onPressed: () {
-                      prescriptionsSelected = false;
-                      reportsSelected = true;
+                      _startUpload(selectedFolderType);
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],
-              ),
-            ));
+              );
+            },
+          );
+        });
   }
 
   @override
