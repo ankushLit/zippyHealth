@@ -1,7 +1,9 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:zippyhealth/services/database.dart';
 import 'dart:io';
 import 'auth.dart';
+import 'package:zippyhealth/models/image_data_model.dart';
 
 class Uploader extends StatefulWidget {
   final File file;
@@ -18,65 +20,111 @@ class _UploaderState extends State<Uploader> {
 
   StorageUploadTask _uploadTask;
 
-  void _startUpload(String folder) async {
+  void _startUpload(String folder, String fileName) async {
     String x = await _authService.getUid();
     String filepath = x + '/' + folder + '/${DateTime.now()}.png';
-    setState(() {
-      _uploadTask = _storage.ref().child(filepath).putFile(widget.file);
-    });
+    await DatabaseService(uid: x).saveStorageData(fileName, folder);
+    _uploadTask = _storage.ref().child(filepath).putFile(widget.file);
+    setState(() {});
   }
 
-  void _selectFolderPrompt() {
-    showDialog(
+  Future<String> _fileNamePrompt(BuildContext context) {
+    TextEditingController _ctrl = TextEditingController();
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Enter File name'),
+        content: TextField(
+          controller: _ctrl,
+        ),
+        actions: [
+          FlatButton(
+            child: Text(
+              'Submit',
+              style: TextStyle(color: Colors.teal),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop(_ctrl.text.toString());
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<ImageStorageData> _selectFolderPrompt(
+    BuildContext context,
+  ) {
+    TextEditingController _ctrl = TextEditingController();
+    return showDialog(
         context: context,
         builder: (context) {
           bool reportsSelected = false;
           bool prescriptionsSelected = false;
           List<String> folderType = ['Prescriptions', 'Reports'];
           String selectedFolderType = 'Prescriptions';
+          List<String> dataToSend = [
+            DateTime.now().toString(),
+            selectedFolderType
+          ];
           return StatefulBuilder(
             builder: (context, setState) {
               return AlertDialog(
                 title: Text('Select Type'),
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    FlatButton.icon(
-                      label: Text('Prescriptions'),
-                      icon: Icon(Icons.list),
-                      color: prescriptionsSelected ? Colors.teal : Colors.grey,
-                      onPressed: () {
-                        setState(() {
-                          selectedFolderType = folderType[0];
-                          prescriptionsSelected = true;
-                          reportsSelected = false;
-                        });
-                      },
+                content: Column(
+                  children: [
+                    TextField(
+                      controller: _ctrl,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    FlatButton.icon(
-                      label: Text('Reports'),
-                      icon: Icon(Icons.pages),
-                      color: reportsSelected ? Colors.teal : Colors.grey,
-                      onPressed: () {
-                        setState(() {
-                          selectedFolderType = folderType[1];
-                          prescriptionsSelected = false;
-                          reportsSelected = true;
-                        });
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        FlatButton.icon(
+                          label: Text('Prescriptions'),
+                          icon: Icon(Icons.list),
+                          color:
+                              prescriptionsSelected ? Colors.teal : Colors.grey,
+                          onPressed: () {
+                            setState(() {
+                              selectedFolderType = folderType[0];
+                              dataToSend.insert(1, selectedFolderType);
+                              prescriptionsSelected = true;
+                              reportsSelected = false;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        FlatButton.icon(
+                          label: Text('Reports'),
+                          icon: Icon(Icons.pages),
+                          color: reportsSelected ? Colors.teal : Colors.grey,
+                          onPressed: () {
+                            setState(() {
+                              selectedFolderType = folderType[1];
+                              dataToSend.insert(1, selectedFolderType);
+                              prescriptionsSelected = false;
+                              reportsSelected = true;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
                 actions: [
                   FlatButton(
-                    child: Text('Upload'),
+                    child: Text(
+                      'Upload',
+                      style: TextStyle(color: Colors.teal),
+                    ),
                     onPressed: () {
-                      _startUpload(selectedFolderType);
-                      Navigator.of(context).pop();
+                      //_startUpload(selectedFolderType, fileName);
+                      ImageStorageData _imageStorageData = ImageStorageData(
+                          _ctrl.text.toString(), selectedFolderType);
+                      Navigator.of(context).pop(_imageStorageData);
                     },
                   ),
                 ],
@@ -123,8 +171,22 @@ class _UploaderState extends State<Uploader> {
           color: Colors.teal,
         ),
         child: FlatButton.icon(
+          // onPressed: () {
+          //   _selectFolderPrompt();
+          // },
           onPressed: () {
-            _selectFolderPrompt();
+            print('pressed');
+            _selectFolderPrompt(context).then((value) {
+              ImageStorageData recievedData = value;
+              print(recievedData.fileName);
+              _startUpload(recievedData.folder, recievedData.fileName);
+            });
+            // _fileNamePrompt(context).then((value) {
+            //   setState(() {
+            //     fileName = value;
+            //   });
+            //_selectFolderPrompt(context, value);
+            // });
           },
           icon: Icon(
             Icons.cloud_upload,

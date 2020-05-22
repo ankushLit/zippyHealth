@@ -17,6 +17,17 @@ class DatabaseService {
     });
   }
 
+  Future saveStorageData(String fileName, String path) async {
+    return await patients.document(uid).collection(path).document().setData({
+      'fileName': fileName,
+      'date': DateTime.now().day.toString() +
+          '/' +
+          DateTime.now().month.toString() +
+          '/' +
+          DateTime.now().year.toString(),
+    });
+  }
+
 // get prescription list from snapshot
   List<Prescriptions> _prescriptionListFromSnapshot(
       QuerySnapshot querySnapshot) {

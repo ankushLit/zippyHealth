@@ -6,7 +6,7 @@ import 'package:zippyhealth/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:zippyhealth/shared/loading.dart';
 import 'package:zippyhealth/screens/scanDocs/image_handler.dart';
-import 'package:zippyhealth/screens/viewDocs/pg2.dart';
+import 'package:zippyhealth/screens/viewDocs/document_gallery.dart';
 
 class Home extends StatefulWidget {
   HomeState createState() => HomeState();
@@ -22,7 +22,7 @@ class HomeState extends State<Home> {
       case 1:
         return ImageCapture();
       case 2:
-        return Page2();
+        return ImageGridPrescriptions();
 
         break;
       default:
