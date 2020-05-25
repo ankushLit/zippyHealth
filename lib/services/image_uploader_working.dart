@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'auth.dart';
 import 'package:zippyhealth/shared/constants.dart';
-import 'package:zippyhealth/models/image_data_model.dart';
 
 class Uploader extends StatefulWidget {
   final File file;
@@ -20,45 +19,11 @@ class _UploaderState extends State<Uploader> {
       FirebaseStorage(storageBucket: 'gs://zippyhealth-f938e.appspot.com');
   final AuthService _authService = AuthService();
 
-  // StorageUploadTask _uploadTask;
-
-  // void _startUpload(String folder, String fileName) async {
-  //   String x = await _authService.getUid();
-  //   String filepath = x + '/' + folder + '/${DateTime.now()}.png';
-  //   await DatabaseService(uid: x).saveStorageData(fileName, folder);
-  //   _uploadTask = _storage.ref().child(filepath).putFile(widget.file);
-  //   setState(() {});
-  // }
-
-  Future<String> _fileNamePrompt(BuildContext context) {
-    TextEditingController _ctrl = TextEditingController();
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Enter File name'),
-        content: TextField(
-          controller: _ctrl,
-        ),
-        actions: [
-          FlatButton(
-            child: Text(
-              'Submit',
-              style: TextStyle(color: Colors.teal),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop(_ctrl.text.toString());
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<ImageStorageData> _selectFolderPrompt(
+  void _selectFolderPrompt(
     BuildContext context,
   ) {
     TextEditingController _ctrl = TextEditingController();
-    return showDialog(
+    showDialog(
         context: context,
         builder: (context) {
           bool reportsSelected = false;
@@ -119,9 +84,6 @@ class _UploaderState extends State<Uploader> {
                                       ),
                                     ],
                                   ),
-                                // LinearProgressIndicator(
-                                //   value: progressPercent,
-                                // ),
                                 Text(
                                     '${(progressPercent * 100).toStringAsFixed(2)}%')
                               ],
@@ -221,7 +183,6 @@ class _UploaderState extends State<Uploader> {
                             style: TextStyle(color: Colors.teal),
                           ),
                           onPressed: () async {
-                            //_startUpload(selectedFolderType, _ctrl.text);
                             if (_formKey.currentState.validate()) {
                               if (selectedFolderType != null) {
                                 String x = await _authService.getUid();
@@ -238,9 +199,6 @@ class _UploaderState extends State<Uploader> {
                                 setState(() {});
                               }
                             }
-                            // ImageStorageData _imageStorageData = ImageStorageData(
-                            //     _ctrl.text.toString(), selectedFolderType);
-                            //Navigator.of(context).pop(_imageStorageData);
                           },
                         )
                       : FlatButton(
@@ -258,57 +216,14 @@ class _UploaderState extends State<Uploader> {
 
   @override
   Widget build(BuildContext context) {
-    // if (_uploadTask != null) {
-    //   return StreamBuilder<StorageTaskEvent>(
-    //     stream: _uploadTask.events,
-    //     builder: (context, snapshot) {
-    //       var event = snapshot?.data?.snapshot;
-    //       double progressPercent =
-    //           event != null ? event.bytesTransferred / event.totalByteCount : 0;
-    //       return Column(
-    //         children: <Widget>[
-    //           if (_uploadTask.isComplete) Text('Uploaded'),
-    //           if (_uploadTask.isPaused)
-    //             FlatButton(
-    //               onPressed: _uploadTask.resume,
-    //               child: Icon(Icons.play_arrow),
-    //             ),
-    //           if (_uploadTask.isInProgress)
-    //             FlatButton(
-    //               onPressed: _uploadTask.pause,
-    //               child: Icon(Icons.pause),
-    //             ),
-    //           LinearProgressIndicator(
-    //             value: progressPercent,
-    //           ),
-    //           Text('${(progressPercent * 100).toStringAsFixed(2)}%')
-    //         ],
-    //       );
-    //     },
-    //   );
-    // } else {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.teal,
       ),
       child: FlatButton.icon(
-        // onPressed: () {
-        //   _selectFolderPrompt();
-        // },
         onPressed: () {
-          print('pressed');
-          // _selectFolderPrompt(context).then((value) {
-          //   ImageStorageData recievedData = value;
-          //   print(recievedData.fileName);
-          //   _startUpload(recievedData.folder, recievedData.fileName);
-          // });
-          // _fileNamePrompt(context).then((value) {
-          //   setState(() {
-          //     fileName = value;
-          //   });
           _selectFolderPrompt(context);
-          // });
         },
         icon: Icon(
           Icons.cloud_upload,
@@ -324,4 +239,3 @@ class _UploaderState extends State<Uploader> {
     );
   }
 }
-// }

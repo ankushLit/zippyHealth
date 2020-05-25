@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:zippyhealth/models/imageDataP.dart';
+import 'package:zippyhealth/models/imageDataR.dart';
 import 'package:zippyhealth/models/prescription_model.dart';
 import 'package:zippyhealth/screens/home/prescription_list.dart';
+import 'package:zippyhealth/screens/viewDocs/selection_page.dart';
 import 'package:zippyhealth/services/auth.dart';
 import 'package:zippyhealth/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:zippyhealth/shared/loading.dart';
 import 'package:zippyhealth/screens/scanDocs/image_handler.dart';
-import 'package:zippyhealth/screens/viewDocs/document_gallery.dart';
 
 class Home extends StatefulWidget {
   HomeState createState() => HomeState();
@@ -22,7 +24,7 @@ class HomeState extends State<Home> {
       case 1:
         return ImageCapture();
       case 2:
-        return ImageGridPrescriptions();
+        return SelectionPage();
 
         break;
       default:
@@ -45,43 +47,49 @@ class HomeState extends State<Home> {
           if (snapshot.hasData) {
             children = StreamProvider<List<Prescriptions>>.value(
               value: DatabaseService(uid: uid).prescriptions,
-              child: Scaffold(
-                backgroundColor: const Color(0xffD1F2EB),
-                appBar: AppBar(
-                  title: Text('ZippyHealth'),
-                  //backgroundColor: const Color(0xff17A589),
-                  elevation: 0.0,
-                  actions: <Widget>[
-                    FlatButton.icon(
-                        onPressed: () async {
-                          await _auth.signOut();
-                        },
-                        icon: Icon(Icons.person),
-                        label: Text('logout'))
-                  ],
-                ),
-                body: callPage(_currentIndex),
-                bottomNavigationBar: BottomNavigationBar(
-                  currentIndex: _currentIndex,
-                  onTap: (val) {
-                    setState(() {
-                      _currentIndex = val;
-                    });
-                  },
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.list),
-                      title: Text("Prescriptions"),
+              child: StreamProvider<List<ImageDataP>>.value(
+                value: DatabaseService(uid: uid).prescriptionImages,
+                child: StreamProvider<List<ImageDataR>>.value(
+                  value: DatabaseService(uid: uid).reportImages,
+                  child: Scaffold(
+                    backgroundColor: const Color(0xffD1F2EB),
+                    appBar: AppBar(
+                      title: Text('ZippyHealth'),
+                      //backgroundColor: const Color(0xff17A589),
+                      elevation: 0.0,
+                      actions: <Widget>[
+                        FlatButton.icon(
+                            onPressed: () async {
+                              await _auth.signOut();
+                            },
+                            icon: Icon(Icons.person),
+                            label: Text('logout'))
+                      ],
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.camera),
-                      title: Text("Scan"),
+                    body: callPage(_currentIndex),
+                    bottomNavigationBar: BottomNavigationBar(
+                      currentIndex: _currentIndex,
+                      onTap: (val) {
+                        setState(() {
+                          _currentIndex = val;
+                        });
+                      },
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.list),
+                          title: Text("Prescriptions"),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.camera),
+                          title: Text("Scan"),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.pages),
+                          title: Text("Documents"),
+                        ),
+                      ],
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.pages),
-                      title: Text("Documents"),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             );

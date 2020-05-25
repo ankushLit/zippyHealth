@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zippyhealth/models/prescription_model.dart';
+import 'package:zippyhealth/models/imageDataP.dart';
+import 'package:zippyhealth/models/imageDataR.dart';
 
 class DatabaseService {
   final String uid;
@@ -50,5 +52,42 @@ class DatabaseService {
         .collection('prescription')
         .snapshots()
         .map(_prescriptionListFromSnapshot);
+  }
+
+//prescription Images
+  List<ImageDataP> _prescriptionsImageListFromSnapshot(
+      QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((doc) {
+      return ImageDataP(
+          imageName: doc.data['fileName'], date: doc.data['date']);
+    }).toList();
+  }
+
+//get prescriptionImages stream
+  Stream<List<ImageDataP>> get prescriptionImages {
+    print('Prescription stream');
+    return patients
+        .document(uid)
+        .collection('prescriptionsImages')
+        .snapshots()
+        .map(_prescriptionsImageListFromSnapshot);
+  }
+
+  //report Images
+  List<ImageDataR> _reportsImageListFromSnapshot(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((doc) {
+      return ImageDataR(
+          imageName: doc.data['fileName'], date: doc.data['date']);
+    }).toList();
+  }
+
+//get prescriptionImages stream
+  Stream<List<ImageDataR>> get reportImages {
+    print('Report stream');
+    return patients
+        .document(uid)
+        .collection('reportsImages')
+        .snapshots()
+        .map(_reportsImageListFromSnapshot);
   }
 }
