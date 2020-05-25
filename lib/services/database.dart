@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zippyhealth/models/prescription_model.dart';
 import 'package:zippyhealth/models/imageDataP.dart';
 import 'package:zippyhealth/models/imageDataR.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService {
   final String uid;
@@ -19,7 +20,7 @@ class DatabaseService {
     });
   }
 
-  Future saveStorageData(String fileName, String path) async {
+  Future saveStorageData(String fileName, String path, String url) async {
     return await patients.document(uid).collection(path).document().setData({
       'fileName': fileName,
       'date': DateTime.now().day.toString() +
@@ -27,6 +28,7 @@ class DatabaseService {
           DateTime.now().month.toString() +
           '/' +
           DateTime.now().year.toString(),
+      'url': url,
     });
   }
 
@@ -59,7 +61,11 @@ class DatabaseService {
       QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((doc) {
       return ImageDataP(
-          imageName: doc.data['fileName'], date: doc.data['date']);
+        imageName: doc.data['fileName'],
+        date: doc.data['date'],
+        uid: uid,
+        imagePath: doc.data['url'],
+      );
     }).toList();
   }
 
@@ -77,7 +83,11 @@ class DatabaseService {
   List<ImageDataR> _reportsImageListFromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((doc) {
       return ImageDataR(
-          imageName: doc.data['fileName'], date: doc.data['date']);
+        imageName: doc.data['fileName'],
+        date: doc.data['date'],
+        uid: uid,
+        imagePath: doc.data['url'],
+      );
     }).toList();
   }
 

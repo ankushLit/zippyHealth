@@ -18,7 +18,7 @@ class _UploaderState extends State<Uploader> {
   final FirebaseStorage _storage =
       FirebaseStorage(storageBucket: 'gs://zippyhealth-f938e.appspot.com');
   final AuthService _authService = AuthService();
-
+  String url;
   void _selectFolderPrompt(
     BuildContext context,
   ) {
@@ -44,6 +44,7 @@ class _UploaderState extends State<Uploader> {
                           double progressPercent = event != null
                               ? event.bytesTransferred / event.totalByteCount
                               : 0;
+
                           return Container(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -190,13 +191,22 @@ class _UploaderState extends State<Uploader> {
                                     '/' +
                                     selectedFolderType +
                                     '/${_ctrl.text.toString()}.png';
-                                await DatabaseService(uid: x).saveStorageData(
-                                    _ctrl.text.toString(), selectedFolderType);
                                 _uploadTask = _storage
                                     .ref()
                                     .child(filepath)
                                     .putFile(widget.file);
                                 setState(() {});
+                                url = (await (await _uploadTask.onComplete)
+                                        .ref
+                                        .getDownloadURL())
+                                    .toString();
+                                await DatabaseService(uid: x).saveStorageData(
+                                    _ctrl.text.toString(),
+                                    selectedFolderType,
+                                    url);
+                                setState(() {
+                                  print(url);
+                                });
                               }
                             }
                           },

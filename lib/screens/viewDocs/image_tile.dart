@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ImageGridItem extends StatelessWidget {
   final String fileName;
   final String imagePath;
   final String date;
-  ImageGridItem({this.fileName, this.date, this.imagePath});
+  final String uid;
+  ImageGridItem({this.fileName, this.date, this.imagePath, this.uid});
   @override
   Widget build(BuildContext context) {
+    String imageUrlStart;
+
+    // printUrl() async {
+    //   StorageReference ref = FirebaseStorage.instance
+    //       .ref()
+    //       .child(uid + '/' + imagePath + '/' + fileName + '.png');
+    //   imageUrlStart = (await ref.getDownloadURL()).toString();
+    //   print(imageUrlStart);
+    //   return imageUrlStart;
+    // }
+
+    // printUrl().then((value) => null);
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: GestureDetector(
@@ -26,6 +40,12 @@ class ImageGridItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+                Image.network(
+                  imagePath,
+                  //fit: BoxFit.scaleDown,
+                  height: 159,
+                  width: 150,
+                ),
                 Container(
                   decoration: BoxDecoration(color: Colors.teal),
                   padding: const EdgeInsets.all(8.0),

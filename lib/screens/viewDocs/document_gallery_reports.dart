@@ -24,6 +24,8 @@ class _ImageGridReportsState extends State<ImageGridReports> {
             return ImageGridItem(
               date: reportImages[index].date,
               fileName: reportImages[index].imageName,
+              uid: reportImages[index].uid,
+              imagePath: reportImages[index].imagePath,
             );
           });
     }

@@ -1,5 +1,7 @@
 class ImageDataP {
   String imageName;
   String date;
-  ImageDataP({this.imageName, this.date});
+  String uid;
+  String imagePath;
+  ImageDataP({this.imageName, this.date, this.uid, this.imagePath});
 }

@@ -24,6 +24,8 @@ class _ImageGridPrescriptionsState extends State<ImageGridPrescriptions> {
             return ImageGridItem(
               date: prescriptionImages[index].date,
               fileName: prescriptionImages[index].imageName,
+              imagePath: prescriptionImages[index].imagePath,
+              uid: prescriptionImages[index].uid,
             );
           });
     }
