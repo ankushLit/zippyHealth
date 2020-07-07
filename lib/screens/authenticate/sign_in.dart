@@ -32,6 +32,15 @@ class _SignInState extends State<SignIn> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 100.0),
+                      Text(
+                        'Zippy Health',
+                        style: TextStyle(
+                          color: const Color(0xffD1F2EB),
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 30.0),
                       TextFormField(
                         decoration:
                             textInputDecorection.copyWith(hintText: 'Email'),
