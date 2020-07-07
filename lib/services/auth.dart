@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zippyhealth/models/user.dart';
 import 'package:zippyhealth/services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String uid = '';
+  String mobile = '';
   // create user object based on FirebaseUser
 
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -51,8 +53,20 @@ class AuthService {
   Future<String> getUid() async {
     final FirebaseUser user = await _auth.currentUser();
     uid = user.uid.toString();
-    //print(uid);
-    return uid;
+    String x = uid + ',';
+    await Firestore.instance
+        .collection('patients')
+        .document(uid)
+        .get()
+        .then((value) {
+      print("WHY? " + value.data['mobile']);
+      mobile = value.data['mobile'].toString();
+    });
+    print(uid);
+    x = x + mobile;
+    print('mobileX: ' + mobile);
+    print('X:' + x);
+    return x + mobile;
   }
 
   //sign out

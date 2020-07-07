@@ -30,8 +30,12 @@ dependencies:
   qr_flutter: ^3.2.0
   firebase_core: ^0.4.4+3
   firebase_storage: ^3.1.5
-  image_cropper: ^1.2.2
+  image_cropper: ^1.2.3
   image_picker: ^0.6.6+1
+  cached_network_image: ^2.2.0+1
+  photo_view: ^0.9.2
+  popup_menu: ^1.0.5
+  barcode_scan: ^3.0.1
 
 dev_dependencies:
   flutter_test:

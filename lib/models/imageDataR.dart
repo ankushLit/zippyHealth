@@ -3,5 +3,6 @@ class ImageDataR {
   String date;
   String uid;
   String imagePath;
-  ImageDataR({this.imageName, this.date, this.uid, this.imagePath});
+  String docId;
+  ImageDataR({this.imageName, this.date, this.uid, this.imagePath, this.docId});
 }

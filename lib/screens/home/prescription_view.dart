@@ -80,11 +80,12 @@ class PrescriptionView extends StatelessWidget {
     }
 
     int prescriptionCounter = 0;
-    int prescriptionIndex = -4;
+    int prescriptionIndex = -5;
     int tabletTimingIndex = 0;
+    int dosageIndex = -5;
     final bottomContent = Expanded(
       child: ListView.builder(
-          itemCount: ((prescription.tablets.length) ~/ 4).toInt(),
+          itemCount: ((prescription.tablets.length) ~/ 5).toInt(),
           itemBuilder: (context, index) {
             return Card(
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
@@ -105,9 +106,13 @@ class PrescriptionView extends StatelessWidget {
                         height: 15.0,
                       ),
                       Text(
-                        prescription.tablets[prescriptionIndex += 4],
+                        prescription.tablets[prescriptionIndex += 5],
                         style: TextStyle(fontSize: 20.0),
                       ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text('Dosage: ' + prescription.tablets[dosageIndex += 6]),
                     ],
                   ),
                   subtitle: Column(children: <Widget>[
@@ -120,7 +125,7 @@ class PrescriptionView extends StatelessWidget {
                           width: 10.0,
                         ),
                         prescription.tablets[tabletTimingIndex =
-                                    prescriptionIndex + 1] ==
+                                    prescriptionIndex + 2] ==
                                 '1'
                             ? Icon(
                                 Icons.check_circle,

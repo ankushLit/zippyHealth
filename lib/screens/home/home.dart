@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zippyhealth/models/imageDataP.dart';
 import 'package:zippyhealth/models/imageDataR.dart';
 import 'package:zippyhealth/models/prescription_model.dart';
 import 'package:zippyhealth/screens/home/prescription_list.dart';
+import 'package:zippyhealth/screens/home/scan_prescription_list.dart';
 import 'package:zippyhealth/screens/viewDocs/selection_page.dart';
 import 'package:zippyhealth/services/auth.dart';
 import 'package:zippyhealth/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:zippyhealth/shared/loading.dart';
 import 'package:zippyhealth/screens/scanDocs/image_handler.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class Home extends StatefulWidget {
   HomeState createState() => HomeState();
@@ -16,6 +19,7 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   int _currentIndex = 0;
+  String barcode = "";
 
   Widget callPage(int currrentIndex) {
     switch (currrentIndex) {
@@ -36,8 +40,13 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
     String uid = '';
+    String mobile = '';
     _auth.getUid().then((onValue) {
-      uid = onValue;
+      List<String> temp = onValue.split(",");
+      uid = temp[0];
+      print('split uid: ' + temp[0]);
+      mobile = temp[1].substring(0, 10);
+      print('split Mobile: ' + mobile);
       print("uid: " + onValue);
     });
     return FutureBuilder<String>(
@@ -46,11 +55,14 @@ class HomeState extends State<Home> {
           Widget children;
           if (snapshot.hasData) {
             children = StreamProvider<List<Prescriptions>>.value(
-              value: DatabaseService(uid: uid).prescriptions,
+              value:
+                  DatabaseService(mobileNumber: mobile, uid: uid).prescriptions,
               child: StreamProvider<List<ImageDataP>>.value(
-                value: DatabaseService(uid: uid).prescriptionImages,
+                value: DatabaseService(mobileNumber: mobile, uid: uid)
+                    .prescriptionImages,
                 child: StreamProvider<List<ImageDataR>>.value(
-                  value: DatabaseService(uid: uid).reportImages,
+                  value: DatabaseService(mobileNumber: mobile, uid: uid)
+                      .reportImages,
                   child: Scaffold(
                     backgroundColor: const Color(0xffD1F2EB),
                     appBar: AppBar(
@@ -67,6 +79,23 @@ class HomeState extends State<Home> {
                       ],
                     ),
                     body: callPage(_currentIndex),
+                    floatingActionButton: FloatingActionButton(
+                      onPressed: () async {
+                        String x = null;
+                        print('In barcode mathod');
+                        if ((x = await scan()) != null) {
+                          print(x);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => QRscanned(
+                                        mobNumber: x,
+                                        uid: uid,
+                                      )));
+                        }
+                      },
+                      child: Icon(Icons.crop_free),
+                    ),
                     bottomNavigationBar: BottomNavigationBar(
                       currentIndex: _currentIndex,
                       onTap: (val) {
@@ -103,5 +132,28 @@ class HomeState extends State<Home> {
           }
           return children;
         });
+  }
+
+  Future<String> scan() async {
+    try {
+      var barcodeResult = await BarcodeScanner.scan();
+      String barcode = barcodeResult.rawContent;
+      print('Barcode: ' + barcode);
+      setState(() => this.barcode = barcode);
+      return barcode;
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          this.barcode = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() => this.barcode = 'Unknown error: $e');
+      }
+    } on FormatException {
+      setState(() => this.barcode =
+          'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      setState(() => this.barcode = 'Unknown error: $e');
+    }
   }
 }

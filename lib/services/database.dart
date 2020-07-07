@@ -3,20 +3,22 @@ import 'package:zippyhealth/models/prescription_model.dart';
 import 'package:zippyhealth/models/imageDataP.dart';
 import 'package:zippyhealth/models/imageDataR.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as Path;
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  final String mobileNumber;
+  DatabaseService({this.uid, this.mobileNumber});
   //collection reference
   final CollectionReference patients =
       Firestore.instance.collection('patients');
 
-  Future updateUserData(String name, String age, String weight) async {
+  Future updateUserData(String name, String age, String mobile) async {
     print(uid);
     return await patients.document(uid).setData({
       'name': name,
       'age': age,
-      'weight': weight,
+      'mobile': mobile,
     });
   }
 
@@ -37,21 +39,22 @@ class DatabaseService {
       QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((doc) {
       return Prescriptions(
-          name: doc.data['name'] ?? '',
+          name: doc.data['patient_name'] ?? '',
           docName: doc.data['doctor_name'] ?? '',
-          tablets: doc.data['tablets'].toString().split(',') ?? [],
-          presId: doc.data['presId'] ?? '',
+          tablets: doc.data['medicines'].toString().split(',') ?? [],
+          presId: doc.data['patient_no'] ?? '',
           date: doc.data['date'] ?? '');
     }).toList();
   }
 
   // get prescription stream
   Stream<List<Prescriptions>> get prescriptions {
-    print('uid' + uid);
+    //print('uid' + uid);
+    print('Mobile ' + mobileNumber);
     return Firestore.instance
-        .collection('patients')
-        .document(uid)
-        .collection('prescription')
+        .collection('Prescriptions')
+        .document(mobileNumber)
+        .collection('presc')
         .snapshots()
         .map(_prescriptionListFromSnapshot);
   }
@@ -65,6 +68,7 @@ class DatabaseService {
         date: doc.data['date'],
         uid: uid,
         imagePath: doc.data['url'],
+        docId: doc.documentID.toString(),
       );
     }).toList();
   }
@@ -79,7 +83,7 @@ class DatabaseService {
         .map(_prescriptionsImageListFromSnapshot);
   }
 
-  //report Images
+  //get report Images
   List<ImageDataR> _reportsImageListFromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((doc) {
       return ImageDataR(
@@ -87,6 +91,7 @@ class DatabaseService {
         date: doc.data['date'],
         uid: uid,
         imagePath: doc.data['url'],
+        docId: doc.documentID.toString(),
       );
     }).toList();
   }
@@ -99,5 +104,26 @@ class DatabaseService {
         .collection('reportsImages')
         .snapshots()
         .map(_reportsImageListFromSnapshot);
+  }
+
+  void deletePrescriptions(String docId) {
+    patients
+        .document(uid)
+        .collection('prescriptionsImages')
+        .document(docId)
+        .delete();
+  }
+
+  void deleteReports(String docId) {
+    patients.document(uid).collection('reportsImages').document(docId).delete();
+  }
+
+  Future<void> deleteImage(String imageFileUrl) async {
+    var fileUrl = Uri.decodeFull(Path.basename(imageFileUrl))
+        .replaceAll(new RegExp(r'(\?alt).*'), '');
+
+    final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child(fileUrl);
+    await firebaseStorageRef.delete();
   }
 }

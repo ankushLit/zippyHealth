@@ -187,23 +187,25 @@ class _UploaderState extends State<Uploader> {
                             if (_formKey.currentState.validate()) {
                               if (selectedFolderType != null) {
                                 String x = await _authService.getUid();
-                                String filepath = x +
+                                String filepath = x.split(',')[0] +
                                     '/' +
                                     selectedFolderType +
                                     '/${_ctrl.text.toString()}.png';
+                                print(filepath);
                                 _uploadTask = _storage
                                     .ref()
                                     .child(filepath)
                                     .putFile(widget.file);
-                                setState(() {});
+                                setState(() {
+                                  print("object came");
+                                });
                                 url = (await (await _uploadTask.onComplete)
                                         .ref
                                         .getDownloadURL())
                                     .toString();
-                                await DatabaseService(uid: x).saveStorageData(
-                                    _ctrl.text.toString(),
-                                    selectedFolderType,
-                                    url);
+                                await DatabaseService(uid: x.split(',')[0])
+                                    .saveStorageData(_ctrl.text.toString(),
+                                        selectedFolderType, url);
                                 setState(() {
                                   print(url);
                                 });
@@ -211,12 +213,14 @@ class _UploaderState extends State<Uploader> {
                             }
                           },
                         )
-                      : FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Done'),
-                        )
+                      : (url == null)
+                          ? Text('Uploading')
+                          : FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Done'),
+                            )
                 ],
               );
             },

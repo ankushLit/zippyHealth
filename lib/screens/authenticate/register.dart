@@ -20,7 +20,7 @@ class _RegisterState extends State<Register> {
   String _errorMsg = '';
   String _name = '';
   String _age = '';
-  String _weight = '';
+  String _mobile = '';
   @override
   Widget build(BuildContext context) {
     return _loading
@@ -62,13 +62,16 @@ class _RegisterState extends State<Register> {
                       SizedBox(height: 20.0),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration:
-                            textInputDecorection.copyWith(hintText: 'weight'),
-                        validator: (val) =>
-                            val.isEmpty ? 'Enter your weight' : null,
+                        decoration: textInputDecorection.copyWith(
+                            hintText: 'Mobile Number'),
+                        validator: (val) => val.isEmpty
+                            ? 'Enter your Mobile Number'
+                            : val.length < 10
+                                ? 'Enter valid mobile number'
+                                : null,
                         onChanged: (val) {
                           setState(() {
-                            _weight = val;
+                            _mobile = val;
                           });
                         },
                       ),
@@ -116,7 +119,7 @@ class _RegisterState extends State<Register> {
                             print(_password);
                             dynamic result =
                                 await _auth.registerWithEmailAndPassword(
-                                    _email, _password, _name, _age, _weight);
+                                    _email, _password, _name, _age, _mobile);
                             if (result == null) {
                               setState(() {
                                 _loading = false;

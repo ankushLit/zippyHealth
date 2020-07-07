@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:zippyhealth/screens/viewDocs/full_screen_image_photoview.dart';
 
 class ImageGridItem extends StatelessWidget {
   final String fileName;
@@ -7,30 +9,21 @@ class ImageGridItem extends StatelessWidget {
   final String date;
   final String uid;
   ImageGridItem({this.fileName, this.date, this.imagePath, this.uid});
+
   @override
   Widget build(BuildContext context) {
-    String imageUrlStart;
-
-    // printUrl() async {
-    //   StorageReference ref = FirebaseStorage.instance
-    //       .ref()
-    //       .child(uid + '/' + imagePath + '/' + fileName + '.png');
-    //   imageUrlStart = (await ref.getDownloadURL()).toString();
-    //   print(imageUrlStart);
-    //   return imageUrlStart;
-    // }
-
-    // printUrl().then((value) => null);
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: GestureDetector(
         onTap: () => {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => PrescriptionView(prescription: pres),
-          //   ),
-          // ),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FullScreenImage(
+                imagePath: imagePath,
+              ),
+            ),
+          ),
         },
         child: Card(
           margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
@@ -40,12 +33,19 @@ class ImageGridItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.network(
-                  imagePath,
-                  //fit: BoxFit.scaleDown,
+                CachedNetworkImage(
+                  imageUrl: imagePath,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                   height: 159,
                   width: 150,
                 ),
+                // Image.network(
+                //   imagePath,
+                //   //fit: BoxFit.scaleDown,
+                //   height: 159,
+                //   width: 150,
+                // ),
                 Container(
                   decoration: BoxDecoration(color: Colors.teal),
                   padding: const EdgeInsets.all(8.0),
@@ -70,6 +70,5 @@ class ImageGridItem extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
